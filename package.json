@@ -1,0 +1,49 @@
+{
+  "name": "backend-effrenanthony-penasanchez-fullstackbanckingapplication",
+  "version": "1.0.0",
+  "description": "backend for MIT bank application",
+  "main": "index.js",
+  "scripts": {
+    "lint": "standard",
+    "test": "jest",
+    "dev": "nodemon intex.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EffrenAnthony/backend-effrenanthony-penasanchez-fullstackbanckingapplication.git"
+  },
+  "keywords": [
+    "MERN"
+  ],
+  "author": "EffrenAnthony",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/EffrenAnthony/backend-effrenanthony-penasanchez-fullstackbanckingapplication/issues"
+  },
+  "homepage": "https://github.com/EffrenAnthony/backend-effrenanthony-penasanchez-fullstackbanckingapplication#readme",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.1",
+    "cors": "^2.8.5",
+    "cron": "^1.8.2",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.1.5"
+  },
+  "devDependencies": {
+    "standard": "^16.0.4"
+  },
+  "standard": {
+    "ignore": [
+      "/api/**"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "./node_modules/standard/eslintrc.json"
+    ]
+  }
+}
