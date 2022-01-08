@@ -18,6 +18,16 @@ async function createAccount (accountType) {
   }
 }
 
+async function updateBalance (accountId, newBalance) {
+  try {
+    const updatedAccount = await AccountStore.updateBalance(accountId, newBalance)
+    return updatedAccount
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
-  createAccount
+  createAccount,
+  updateBalance
 }

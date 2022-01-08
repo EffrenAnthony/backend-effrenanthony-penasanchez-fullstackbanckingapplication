@@ -11,6 +11,17 @@ async function createAccount (account) {
   }
 }
 
+async function updateBalance (accountId, newBalance) {
+  try {
+    const newAccount = await Model.findById(accountId)
+    newAccount.balance = newBalance
+    return newAccount.save()
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
-  createAccount
+  createAccount,
+  updateBalance
 }
