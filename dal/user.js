@@ -36,6 +36,40 @@ async function getUserByEmail (email) {
       })
   })
 }
+
+async function addNewAccount (userId, newAccount) {
+  const user = await Model.findById(userId)
+  user.accounts.push(newAccount._id)
+  await user.save()
+  return new Promise((resolve, reject) => {
+    Model.findById({ _id: user._id })
+      .populate('accounts')
+      .exec((error, populated) => {
+        if (error) {
+          reject(Error(error))
+        }
+        resolve(populated)
+      })
+  })
+}
+
+async function getUsers () {
+  try {
+    return new Promise((resolve, reject) => {
+      Model.find()
+        .populate('accounts')
+        .exec((error, populated) => {
+          if (error) {
+            reject(Error(error))
+          }
+          resolve(populated)
+        })
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 // --------------------- Utils -----------------------------
 async function getUser (id) {
   const user = await Model.findById(id)
@@ -63,5 +97,7 @@ async function getUser (id) {
 module.exports = {
   getUser,
   createUser,
-  getUserByEmail
+  getUserByEmail,
+  addNewAccount,
+  getUsers
 }

@@ -44,5 +44,27 @@ router.post('/', verifyUser, async function (req, res) {
     response.error(req, res, error, 'Unexpected Error', 500)
   }
 })
+router.get('/', verifyUser, async function (req, res) {
+  try {
+    const userData = getDataFromToken(req)
+    if (userData.userType !== 'employee') {
+      response.error(req, res, 'You need permissions', 'Unexpected Error', 500)
+      return
+    }
+    const users = await UserController.getUsers()
+    response.success(req, res, users, 200)
+  } catch (error) {
+    response.error(req, res, error, 'Unexpected Error', 500)
+  }
+})
+
+router.post('/addAccount', verifyUser, async function (req, res) {
+  try {
+    const user = await UserController.addNewAccount(req.body.userId, req.body.accountType)
+    response.success(req, res, user, 200)
+  } catch (error) {
+    response.error(req, res, error, 'Unexpected Error', 500)
+  }
+})
 
 module.exports = router

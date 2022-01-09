@@ -18,6 +18,15 @@ async function createAccount (accountType) {
   }
 }
 
+async function deleteAccount (accountId) {
+  try {
+    const deletedAccount = await AccountStore.deleteAccount(accountId)
+    return deletedAccount
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 async function updateBalance (accountId, newBalance) {
   try {
     const updatedAccount = await AccountStore.updateBalance(accountId, newBalance)
@@ -27,7 +36,20 @@ async function updateBalance (accountId, newBalance) {
   }
 }
 
+async function transfer (accountIdFrom, accountNumberTo, newBalanceFrom, amount) {
+  try {
+    const accountTo = await AccountStore.getAccountFromNumber(accountNumberTo)
+    const newBalanceTo = accountTo.balance + Number(amount)
+    const updatedAccount = await AccountStore.transfer(accountIdFrom, accountTo._id, newBalanceFrom, newBalanceTo)
+    return updatedAccount
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   createAccount,
-  updateBalance
+  updateBalance,
+  deleteAccount,
+  transfer
 }
