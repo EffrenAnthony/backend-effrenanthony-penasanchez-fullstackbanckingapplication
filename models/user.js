@@ -10,7 +10,8 @@ const mySchema = new Schema({
     type: Schema.ObjectId,
     ref: 'Account'
   }],
-  createdAt: String
+  createdAt: String,
+  uid: String
 })
 
 const model = mongoose.model('User', mySchema)

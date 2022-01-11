@@ -13,10 +13,15 @@ async function createAccount (account) {
 
 async function updateBalance (accountId, newBalance) {
   try {
+    // TODO return an erro if accound is not found
     const updatedAccount = await Model.findById(accountId)
-    updatedAccount.balance = newBalance
-    await updatedAccount.save()
-    return updatedAccount
+    if (updatedAccount) {
+      updatedAccount.balance = newBalance
+      await updatedAccount.save()
+      return updatedAccount
+    } else {
+      throw new Error('Account not found')
+    }
   } catch (error) {
     console.log(error)
   }
@@ -35,8 +40,12 @@ async function deleteAccount (accountId) {
 async function getAccountFromNumber (number) {
   try {
     const account = await Model.findOne({ number })
-    await account
-    return account
+    if (account) {
+      await account
+      return account
+    } else {
+      throw new Error('Account not found')
+    }
   } catch (error) {
     console.log(error)
   }
@@ -44,8 +53,8 @@ async function getAccountFromNumber (number) {
 
 async function transfer (accountIdFrom, accountIdTo, newBalanceFrom, newBalanceTo) {
   try {
-    const updatedAccountFrom = await updateBalance(accountIdFrom, newBalanceFrom)
     await updateBalance(accountIdTo, newBalanceTo)
+    const updatedAccountFrom = await updateBalance(accountIdFrom, newBalanceFrom)
     return updatedAccountFrom
   } catch (error) {
     console.log(error)

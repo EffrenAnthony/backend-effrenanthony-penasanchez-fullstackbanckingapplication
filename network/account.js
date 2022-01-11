@@ -23,9 +23,13 @@ router.post('/transfer', verifyUser, async function (req, res) {
     const newBalanceFrom = req.body.newBalanceFrom
     const amount = req.body.amount
     const updatedAccount = await AccountController.transfer(accountIdFrom, accountNumberTo, newBalanceFrom, amount)
-    response.success(req, res, updatedAccount, 200)
+    if (updatedAccount) {
+      response.success(req, res, updatedAccount, 200)
+    } else {
+      response.error(req, res, 'Account not found', 500)
+    }
   } catch (error) {
-    response.error(req, res, error, 'Unexpected Error', 500)
+    response.error(req, res, error, 500)
   }
 })
 

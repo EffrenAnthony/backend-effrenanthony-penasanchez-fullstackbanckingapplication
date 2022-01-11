@@ -9,11 +9,11 @@ const { getDataFromToken } = require('../utils/helpers')
 
 function generateToken (user) {
   return jwt.sign({
-    userId: user.userId,
     userType: user.userType,
     email: user.email,
     picture: user.picture,
-    name: user.name
+    name: user.name,
+    uid: user.uid
   }, config.SECRET_KEY
     // { expiresIn: '4h' }
   )
@@ -21,11 +21,11 @@ function generateToken (user) {
 
 router.post('/auth', (req, res) => {
   const user = {
-    userId: req.body.userId,
     userType: req.body.userType,
     email: req.body.email,
     picture: req.body.picture,
-    name: req.body.name
+    name: req.body.name,
+    uid: req.body.uid
   }
   try {
     const token = generateToken(user)
@@ -38,10 +38,10 @@ router.post('/auth', (req, res) => {
 router.post('/', verifyUser, async function (req, res) {
   try {
     const userData = getDataFromToken(req)
-    const user = await UserController.getUserByEmail(userData.email)
+    const user = await UserController.getUserByUid(userData.uid)
     response.success(req, res, user, 200)
   } catch (error) {
-    response.error(req, res, error, 'Unexpected Error', 500)
+    response.error(req, res, error, 500)
   }
 })
 router.get('/', verifyUser, async function (req, res) {
@@ -54,7 +54,7 @@ router.get('/', verifyUser, async function (req, res) {
     const users = await UserController.getUsers()
     response.success(req, res, users, 200)
   } catch (error) {
-    response.error(req, res, error, 'Unexpected Error', 500)
+    response.error(req, res, error, 500)
   }
 })
 

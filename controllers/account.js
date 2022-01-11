@@ -39,9 +39,13 @@ async function updateBalance (accountId, newBalance) {
 async function transfer (accountIdFrom, accountNumberTo, newBalanceFrom, amount) {
   try {
     const accountTo = await AccountStore.getAccountFromNumber(accountNumberTo)
-    const newBalanceTo = accountTo.balance + Number(amount)
-    const updatedAccount = await AccountStore.transfer(accountIdFrom, accountTo._id, newBalanceFrom, newBalanceTo)
-    return updatedAccount
+    if (accountTo) {
+      const newBalanceTo = accountTo.balance + Number(amount)
+      const updatedAccount = await AccountStore.transfer(accountIdFrom, accountTo._id, newBalanceFrom, newBalanceTo)
+      return updatedAccount
+    } else {
+      throw new Error('Account not found')
+    }
   } catch (error) {
     console.log(error)
   }

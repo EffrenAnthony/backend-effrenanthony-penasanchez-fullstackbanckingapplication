@@ -23,8 +23,8 @@ async function createUser (user) {
   }
 }
 
-async function getUserByEmail (email) {
-  const user = await Model.findOne({ email })
+async function getUserByUid (uid) {
+  const user = await Model.findOne({ uid })
   return new Promise((resolve, reject) => {
     Model.findById({ _id: user._id })
       .populate('accounts')
@@ -97,7 +97,7 @@ async function getUser (id) {
 module.exports = {
   getUser,
   createUser,
-  getUserByEmail,
+  getUserByUid,
   addNewAccount,
   getUsers
 }

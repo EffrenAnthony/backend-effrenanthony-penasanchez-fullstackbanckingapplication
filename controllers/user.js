@@ -1,7 +1,7 @@
 const AccountController = require('../controllers/account')
 const UserStore = require('../dal/user')
 
-async function createUser (email, fullName, userType, profilePhoto) {
+async function createUser (email, fullName, userType, profilePhoto, uid) {
   try {
     const newAccount = await AccountController.createAccount('savings')
     const accounts = [newAccount]
@@ -11,7 +11,8 @@ async function createUser (email, fullName, userType, profilePhoto) {
       userType,
       profilePhoto,
       createdAt: new Date().toISOString(),
-      accounts
+      accounts,
+      uid
     }
 
     const user = await UserStore.createUser(newUser)
@@ -21,9 +22,10 @@ async function createUser (email, fullName, userType, profilePhoto) {
   }
 }
 
-async function getUserByEmail (email) {
+async function getUserByUid (uid) {
   try {
-    const user = await UserStore.getUserByEmail(email)
+    const user = await UserStore.getUserByUid(uid)
+    console.log(user)
     return user
   } catch (error) {
     console.log(error)
@@ -50,7 +52,7 @@ async function getUsers () {
 }
 module.exports = {
   createUser,
-  getUserByEmail,
+  getUserByUid,
   addNewAccount,
   getUsers
 }

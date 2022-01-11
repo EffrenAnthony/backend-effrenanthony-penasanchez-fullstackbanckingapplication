@@ -15,21 +15,22 @@ const verifyUser = async (req, res, next) => {
     jwt.verify(token, config.SECRET_KEY, (_, decoded) => {
       userFromToken = decoded
     })
-    const user = await UserModel.findOne({ email: userFromToken.email })
+    const user = await UserModel.findOne({ uid: userFromToken.uid })
     if (user) {
       const haveValidPermissions = user.userType === userFromToken.userType
       if (haveValidPermissions) {
         next()
       } else {
-        response.error(req, res, "User don't have permissions of " + userFromToken.userType, 500)
+        response.error(req, res, "User don't have permissions of " + userFromToken.userType, 200)
       }
     } else {
       const newUser = await UserController.createUser(
         userFromToken.email,
         userFromToken.name,
         userFromToken.userType,
-        userFromToken.picture)
-      console.log(newUser)
+        userFromToken.picture,
+        userFromToken.uid
+      )
       response.success(req, res, newUser, 200)
     }
   } catch (error) {
