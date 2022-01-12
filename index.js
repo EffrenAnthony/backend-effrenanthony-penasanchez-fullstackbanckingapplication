@@ -10,7 +10,7 @@ const db = require('./db')
 const { config } = require('./config/index')
 db(config.mongodb)
 
-app.use(cors('*'))
+app.use(cors(['https://effren-penafullstackbankingapplication.vercel.app/', 'http://localhost:3000']))
 
 // app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
