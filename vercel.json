@@ -1,0 +1,23 @@
+{
+  "name": "effren-penabackendbankingapp",
+  "version": 2,
+  "builds": [
+    {
+      "src": "index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.js"
+    }
+  ],
+  "env": {
+    "PORT": "@bank-port",
+    "CORS": "@bank-cors",
+    "HOST": "@bank-host",
+    "SECRET_KEY": "@bank-secret-key",
+    "MONGODB":"@bank-secret-mongodb"
+  }
+}
